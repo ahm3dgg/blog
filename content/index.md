@@ -2,6 +2,5 @@
 title: Welcome
 ---
 # About Me
-Hello.
 
-Check out my socials below!
+I like computers.
