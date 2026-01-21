@@ -67,3 +67,5 @@ so to fix this we can just set the `InstallDir`, however since this game runs un
 `HKCU\Software\Classes\VirtualStore\MACHINE\SOFTWARE\WOW6432Node\Hasbro Interactive\Frogger2`
 
 That's it.
+
+~ ahm3dgg

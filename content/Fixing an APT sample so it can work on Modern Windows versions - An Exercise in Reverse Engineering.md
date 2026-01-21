@@ -1,4 +1,3 @@
-# Fixing an APT sample so it can work on Modern Windows versions - An Exercise in Reverse Engineering
 
 [**Sample**](https://malshare.com/sample.php?action=detail&hash=364ebe4f568a0b1c2217fa90e04b4712cdefcda363d99630c39a7b10cf249581)
 
@@ -55,25 +54,25 @@ bits 32
 
 sub esp, 28
 
-mov dword [esp + 0],  0x65006B      ; 'ke'
-mov dword [esp + 4],  0x6E0072      ; 'rn'
-mov dword [esp + 8],  0x6C0065      ; 'el'
-mov dword [esp + 12], 0x320033      ; '32'
-mov dword [esp + 16], 0x64002E      ; '.d'
-mov dword [esp + 20], 0x6C006C      ; 'll'
-mov dword [esp + 24], 0x000000      
+mov dword [esp + 0],  0x65006B      ; 'ke'
+mov dword [esp + 4],  0x6E0072      ; 'rn'
+mov dword [esp + 8],  0x6C0065      ; 'el'
+mov dword [esp + 12], 0x320033      ; '32'
+mov dword [esp + 16], 0x64002E      ; '.d'
+mov dword [esp + 20], 0x6C006C      ; 'll'
+mov dword [esp + 24], 0x000000      
 
-mov eax, fs:[0x30]                  ; PEB
-mov eax, [eax+0xC]                  ; PEB.Ldr
-mov eax, [eax+0xC]                  ; PEB.Ldr.InLoadOrderModuleList
-mov eax, [eax]                      ; Skip the Main Exec
-mov eax, [eax]                      ; Skip ntdll, kernel32 comes next
-movzx ecx, word [eax+0x2C]          ; (kernel32) BaseDllname.Length
-mov eax, [eax+0x30]                 ; (kernel32) BaseDllname.Buffer
+mov eax, fs:[0x30]                  ; PEB
+mov eax, [eax+0xC]                  ; PEB.Ldr
+mov eax, [eax+0xC]                  ; PEB.Ldr.InLoadOrderModuleList
+mov eax, [eax]                      ; Skip the Main Exec
+mov eax, [eax]                      ; Skip ntdll, kernel32 comes next
+movzx ecx, word [eax+0x2C]          ; (kernel32) BaseDllname.Length
+mov eax, [eax+0x30]                 ; (kernel32) BaseDllname.Buffer
 
 mov esi, esp
 mov edi, eax
-rep movsb                           ; copy lowercased 'kernel32' to (kernel32) BaseDllname.Buffer
+rep movsb                           ; copy lowercased 'kernel32' to (kernel32) BaseDllname.Buffer
 
 ;; Getting the DLL Base
 ;; by walking backwards page by page, and for that to work
@@ -86,31 +85,31 @@ add eax, 0x00000fff
 and eax, 0xfffff000
 
 search_base:
-    cmp     word [eax], 0x5A4D
-    jz      found
-    sub     eax, 0x1000
-    jmp     search_base
+    cmp     word [eax], 0x5A4D
+    jz      found
+    sub     eax, 0x1000
+    jmp     search_base
 found:
 	; ref (offsets): https://www.sunshine2k.de/reversing/tuts/tut_pe.htm
 	
-    ; PE
-    mov ebx, [eax + 0x3C]
-    add ebx, eax
+    ; PE
+    mov ebx, [eax + 0x3C]
+    add ebx, eax
 
-    ; Export Directory
-    mov ebx, [ebx + 0x78]
-    add ebx, eax
+    ; Export Directory
+    mov ebx, [ebx + 0x78]
+    add ebx, eax
 
-    ; Address of Functions
-    mov ebx, [ebx + 0x1C]
-    add ebx, eax
+    ; Address of Functions
+    mov ebx, [ebx + 0x1C]
+    add ebx, eax
 
-    ; There is only one function so let's get that
-    mov ebx, [ebx]
-    add ebx, eax
+    ; There is only one function so let's get that
+    mov ebx, [ebx]
+    add ebx, eax
 
-    ; Jump to original entry point
-    jmp ebx
+    ; Jump to original entry point
+    jmp ebx
 ```
 
 I then wrote a simple pe patcher in C that will find the code cave inside the `.text` section and place the shellcode at it, we finish by saving the modifed DLL to 'miniduke_patched.dll', the code is pretty straightforward and here is it:
@@ -186,10 +185,10 @@ int wmain(int arg_count, wchar_t *args[])
     HANDLE fixed_file;
     
 	if(arg_count != 3)
-    {
-        wprintf(L"Usage: fixduke.exe <shellcode_path> <dll_path>\n");
-        return 1;
-    }
+    {
+        wprintf(L"Usage: fixduke.exe <shellcode_path> <dll_path>\n");
+        return 1;
+    }
 
     wchar_t *shellcode_path = args[1];
     wchar_t *dll_path = args[2];
