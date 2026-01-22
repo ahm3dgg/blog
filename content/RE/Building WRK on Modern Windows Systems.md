@@ -25,7 +25,7 @@ and Run `Build.bat` which is located at `WindowsResearchKernel-WRK\WRK-v1.2\Buil
 
 You will now have `wrkx86.exe` (the kernel) at
 
-`WindowsResearchKernel-WRK\WRK-v1.2\base\ntos\BUILD\EXE\wrkx86.exe
+`WindowsResearchKernel-WRK\WRK-v1.2\base\ntos\BUILD\EXE\wrkx86.exe`
 
 as well as 
 
