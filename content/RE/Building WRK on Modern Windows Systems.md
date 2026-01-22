@@ -52,7 +52,7 @@ I used `D42X8-7MWXD-M4B76-MKYP7-CW9FD`
 
 ### Copy the Files
 
-> You can manually copy the files, if you enabled copy-paste in your VM for example by installing the guest additions in VirtualBox, however I used the method explained here, which works by creating an ISO which has all the tools. 
+> You can manually copy the files, if you enabled copy-paste in your VM for example by installing the guest additions in VirtualBox, however I used the method explained here, which works by creating an ISO which has all the files. 
 > 
 > https://github.com/toolboc/Windows-Research-Kernel-Hacking
 
@@ -103,6 +103,20 @@ you can verify that `wrkx86.exe` is loaded using `lm` command
 and if you entered `g` this should continue running the machine, and you should see the logs 
 
 ![[Pasted image 20260122211556.png]]
+
+### References
+
+- https://github.com/MeeSong/Windows_OS_Internals_Curriculum_Resource_Kit-ACADEMIC/tree/master/WindowsResearchKernel-WRK
+
+- https://github.com/toolboc/Windows-Research-Kernel-Hacking
+
+ - https://blog.adamfurmanek.pl/2018/07/21/windows-research-kernel-part-1/index.html
+
+### Other Resources To Pair with WRK
+
+- [Inside Windows NT](http://www.bitsavers.org/pdf/microsoft/windows_NT_3.1/Custer_Inside_Windows_NT_1993.pdf)
+- [NT Channel](https://www.youtube.com/@NT-dd8rw)
+- [CS490 Windows Internals](https://empyreal96.github.io/nt-info-depot/CS490_Windows_Internals/CS490%20Windows%20Internals.html)
 
 That's it.
 
