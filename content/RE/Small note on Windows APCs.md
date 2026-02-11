@@ -21,13 +21,16 @@ NtDelayExecution( _In_ BOOLEAN Alertable, _In_ PLARGE_INTEGER DelayInterval );
 
 Specifying `Alertable` with `TRUE` will allow user-mode APCs to be executed.
 
+Other examples are `NtWaitForSingleObject`, `NtWaitForMultipleObjects` , these points are safe because the thread is waiting here its not doing anything.
+
 So for user-mode APCs they are only executed when the thread is in `Alertable` state or there is an explicit call for a function like `NtTestAlert`
 
 for normal kernel-mode APCs, if a normal kernel-mode APC is executing further normal kernel-mode APCs are disabled until that APC finishes its execution. You may also want to read about special APCs.
 
 We can also flush the APC queue with a call to `NtTestAlert` that will execute all APCs the currently held in the Thread's APC queue, if you know about Early Bird APC Injection, this function makes this technique possible simply because ntdll calls it just before calling the main entry point of the loaded module.
 
-Since this is a small note, I will just leave you with some uses of APCs in the kernel and try to think about them and why using APCs are actually a great solution to them ;)
+Since this is a small note, and obviously I didn't cover all the details, 
+I will just leave you with some uses of APCs in the kernel and maybe you can try to think about them and why using APCs are actually a great solution to them ;)
 
 ```
 - NtSuspendThread (APC That waits on a Semaphore)
